@@ -44,19 +44,78 @@ void print_node(Node* n){
 }
 
 int is_valid(Node* n){
+    int i,j,k;
+
+    // Revisar filas
+    for(i=0;i<9;i++){
+        int seen[10]={0};
+        for(j=0;j<9;j++){
+            int val = n->sudo[i][j];
+            if(val!=0){
+                if(seen[val]) return 0;
+                seen[val]=1;
+            }
+        }
+    }
+
+    // Revisar columnas
+    for(j=0;j<9;j++){
+        int seen[10]={0};
+        for(i=0;i<9;i++){
+            int val = n->sudo[i][j];
+            if(val!=0){
+                if(seen[val]) return 0;
+                seen[val]=1;
+            }
+        }
+    }
+
+    // Revisar submatrices 3x3
+    for(k=0;k<9;k++){
+        int seen[10]={0};
+        for(int p=0;p<9;p++){
+            int i = 3*(k/3) + (p/3);
+            int j = 3*(k%3) + (p%3);
+            int val = n->sudo[i][j];
+            if(val!=0){
+                if(seen[val]) return 0;
+                seen[val]=1;
+            }
+        }
+    }
 
     return 1;
 }
 
 
 List* get_adj_nodes(Node* n){
-    List* list=createList();
+    List* list = createList();
+    int i,j,found=0;
+
+    for(i=0;i<9 && !found;i++){
+        for(j=0;j<9;j++){
+            if(n->sudo[i][j] == 0){
+                found=1; 
+                for(int k=1;k<=9;k++){
+                    Node* nuevo = copy(n);
+                    nuevo->sudo[i][j] = k;
+                    pushBack(list, nuevo);
+                }
+                break;
+            }
+        }
+    }
     return list;
 }
 
 
 int is_final(Node* n){
-    return 0;
+    for(int i=0;i<9;i++){
+        for(int j=0;j<9;j++){
+            if(n->sudo[i][j]==0) return 0;
+        }
+    }
+    return 1;
 }
 
 Node* DFS(Node* initial, int* cont){
@@ -65,7 +124,7 @@ Node* DFS(Node* initial, int* cont){
 
 
 
-/*
+
 int main( int argc, char *argv[] ){
 
   Node* initial= read_file("s12a.txt");;
@@ -76,4 +135,4 @@ int main( int argc, char *argv[] ){
   print_node(final);
 
   return 0;
-}*/
+}
