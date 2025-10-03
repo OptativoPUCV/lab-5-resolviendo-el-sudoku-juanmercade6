@@ -14,3 +14,13 @@ sudoku.c:128:5: note: previous definition of 'main' was here
  int main( int argc, char *argv[] ){
      ^~~~
 56d16c4
+Thu, Oct  2, 2025 11:33:46 PM: 
+Compilation failed
+test.c:245:5: error: redefinition of 'main'
+ int main( int argc, char *argv[] ) {
+     ^~~~
+In file included from test.c:5:0:
+sudoku.c:128:5: note: previous definition of 'main' was here
+ int main( int argc, char *argv[] ){
+     ^~~~
+9b8954d
