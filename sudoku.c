@@ -46,7 +46,7 @@ void print_node(Node* n){
 int is_valid(Node* n){
     int i,j,k;
 
-    // Revisar filas
+    
     for(i=0;i<9;i++){
         int seen[10]={0};
         for(j=0;j<9;j++){
@@ -58,7 +58,7 @@ int is_valid(Node* n){
         }
     }
 
-    // Revisar columnas
+    
     for(j=0;j<9;j++){
         int seen[10]={0};
         for(i=0;i<9;i++){
@@ -70,7 +70,7 @@ int is_valid(Node* n){
         }
     }
 
-    // Revisar submatrices 3x3
+   
     for(k=0;k<9;k++){
         int seen[10]={0};
         for(int p=0;p<9;p++){
@@ -99,7 +99,10 @@ List* get_adj_nodes(Node* n){
                 for(int k=1;k<=9;k++){
                     Node* nuevo = copy(n);
                     nuevo->sudo[i][j] = k;
-                    pushBack(list, nuevo);
+                    if(is_valid(nuevo))
+                        pushBack(list, nuevo);
+                    else
+                        free(nuevo);
                 }
                 break;
             }
@@ -118,8 +121,29 @@ int is_final(Node* n){
     return 1;
 }
 
-Node* DFS(Node* initial, int* cont){
-  return NULL;
+Node* DFS(Node* n, int* cont){
+    Stack* S = createStack();
+    push(S, n);
+
+    while(!is_empty(S)){
+        Node* curr = top(S);
+        pop(S);
+        (*cont)++;
+
+        if(is_final(curr)){
+            return curr;
+        }
+
+        List* adjs = get_adj_nodes(curr);
+        Node* adj = first(adjs);
+        while(adj!=NULL){
+            push(S, adj);
+            adj = next(adjs);
+        }
+
+        free(curr);
+    }
+    return NULL;
 }
 
 
