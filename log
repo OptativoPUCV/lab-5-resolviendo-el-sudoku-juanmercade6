@@ -53,3 +53,12 @@ sudoku.c:114:34: error: 'list' undeclared (first use in this function)
                                   ^~~~
 sudoku.c:114:34: note: each undeclared identifier is reported only once for each function it appears in
 9f369c3
+Sun, Oct  5, 2025  8:25:37 PM: 
+Compilation failed
+In file included from test.c:5:0:
+sudoku.c: In function 'get_adj_nodes':
+sudoku.c:114:34: error: 'list' undeclared (first use in this function)
+                         pushBack(list, nuevo);
+                                  ^~~~
+sudoku.c:114:34: note: each undeclared identifier is reported only once for each function it appears in
+3a2fa23
