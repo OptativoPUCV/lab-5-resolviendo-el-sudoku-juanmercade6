@@ -111,7 +111,7 @@ List* get_adj_nodes(Node* n){
                     nuevo->sudo[i][j] = k;
                     // Validar el nodo antes de añadirlo a la lista
                     if(is_valid(nuevo))
-                        pushBack(list, nuevo);
+                        pushBack(lista, nuevo);
                     else
                         free(nuevo); // Se descarta si no sirve
                 }
