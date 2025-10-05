@@ -29,7 +29,7 @@ Node* read_file (char* archivo){
   for(i=0;i<9;i++){
        for(j=0;j<9;j++){
           if(!fscanf (file, "%d", &n->sudo[i][j]))
-            printf("failed to read data!");
+            printf("Error leyendo el archivo\n");
        }
   }
 
