@@ -21,9 +21,9 @@ Node* copy(Node* n){
 }
 
 // Se lee un sudoku inicial desde el archivo
-Node* read_file (char* file_name){
+Node* read_file (char* archivo){
   Node* n = createNode();
-  FILE* file = fopen (file_name, "r");
+  FILE* file = fopen (archivo, "r");
   int i,j;
   // Se cargan los datos en una matriz
   for(i=0;i<9;i++){
@@ -55,38 +55,38 @@ int is_valid(Node* n){
 
     // Se verifican o revisan las filas
     for(i=0;i<9;i++){
-        int seen[10]={0}; // Arreglo para marcar los numeros vistos
+        int vistos[10]={0}; // Arreglo para marcar los numeros vistos
         for(j=0;j<9;j++){
             int val = n->sudo[i][j];
             if(val!=0){
-                if(seen[val]) return 0;
-                seen[val]=1;
+                if(vistos[val]) return 0;
+                vistos[val]=1;
             }
         }
     }
 
     // Se verifican o revisan las columnas
     for(j=0;j<9;j++){
-        int seen[10]={0};
+        int vistos[10]={0};
         for(i=0;i<9;i++){
             int val = n->sudo[i][j];
             if(val!=0){
-                if(seen[val]) return 0;
-                seen[val]=1;
+                if(vistos[val]) return 0;
+                vistos[val]=1;
             }
         }
     }
 
     // Se verifican o revisan las submatrices 3x3
     for(k=0;k<9;k++){
-        int seen[10]={0};
+        int vistos[10]={0};
         for(int p=0;p<9;p++){ // Recorre cada celda de la submatriz
             int i = 3*(k/3) + (p/3); // Fila
             int j = 3*(k%3) + (p%3); // Columna
             int val = n->sudo[i][j];
             if(val!=0){
-                if(seen[val]) return 0;
-                seen[val]=1;
+                if(vistos[val]) return 0;
+                vistos[val]=1;
             }
         }
     }
@@ -97,14 +97,14 @@ int is_valid(Node* n){
 // Se generan los nodos adyacentes a un nodo dado
 // Se busca la primera casilla vacia y se coloca en ella valores de 1 a 9, retornando solamente los nodos que resulten validos.
 List* get_adj_nodes(Node* n){
-    List* list = createList();
-    int i,j,found=0;
+    List* lista = createList();
+    int i,j,encontrado=0;
 
     // Se busca la primera casilla vacia
-    for(i=0;i<9 && !found;i++){
+    for(i=0;i<9 && !encontrado;i++){
         for(j=0;j<9;j++){
             if(n->sudo[i][j] == 0){
-                found=1; 
+                encontrado=1; 
                 // Probar valores del 1 al 9
                 for(int k=1;k<=9;k++){
                     Node* nuevo = copy(n);
@@ -119,7 +119,7 @@ List* get_adj_nodes(Node* n){
             }
         }
     }
-    return list;
+    return lista;
 }
 
 // Se verifica si el nodo es un estado final, osea con solucion
